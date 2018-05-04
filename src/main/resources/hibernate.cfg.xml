@@ -10,8 +10,9 @@
         <property name="connection.username">michael</property>
         <property name="connection.password">passwd</property>
 
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
+        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+
         <mapping class="com.example.dao.entity.Company"/>
         <mapping class="com.example.dao.entity.Counterparty"/>
         <mapping class="com.example.dao.entity.Invoice"/>
