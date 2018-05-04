@@ -7,7 +7,10 @@ import java.util.List;
 @Table(name = "invoices")
 public class Invoice {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String no;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = com.example.dao.entity.Company.class)
