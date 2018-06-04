@@ -5,20 +5,27 @@ import com.example.dao.entity.Company;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import static org.junit.Assert.*;
 
 public class CompanyDaoTest {
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     private Session session;
     private CompanyDao companyDao;
 
+    @BeforeClass
+    public static void beforeAllTests() throws Exception {
+        sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+    }
+
+    @AfterClass
+    public static void afterAllTests() throws Exception {
+        sessionFactory.close();
+    }
+
     @Before
     public void setUp() throws Exception {
-        sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         session = sessionFactory.openSession();
         companyDao = new CompanyDao(session);
     }
@@ -26,7 +33,6 @@ public class CompanyDaoTest {
     @After
     public void tearDown() throws Exception {
         session.close();
-        sessionFactory.close();
     }
 
     @Test
@@ -34,20 +40,26 @@ public class CompanyDaoTest {
         assertEquals(0, companyDao.getAll().size());
     }
 
-    @Test
-    public void shouldAddNewCompanyToDarabase() {
-        assertEquals(0, companyDao.getAll().size());
-
+    private static Company getTestCompany() {
         Company newCompany = new Company();
         newCompany.setName("Test");
         newCompany.setNip("00000");
 
         Address address = new Address();
         address.setZipCode("00-000");
-        address.setStreet("testowa");
+        address.setStreet("street");
         address.setCity("Test");
 
         newCompany.setAddress(address);
+
+        return newCompany;
+    }
+
+    @Test
+    public void shouldAddNewCompanyToDatabase() {
+        assertEquals(0, companyDao.getAll().size());
+
+        Company newCompany = getTestCompany();
 
         int id = companyDao.add(newCompany);
         assertEquals(1, id);
@@ -57,35 +69,26 @@ public class CompanyDaoTest {
     }
 
     @Test
-    public void shouldRemoveCompnayFromDatabase() {
+    public void shouldRemoveCompanyFromDatabase() {
         assertEquals(0, companyDao.getAll().size());
-        Company newCompany = new Company();
-        newCompany.setName("Test");
-        newCompany.setNip("00000");
-
-        Address address = new Address();
-        address.setZipCode("00-000");
-        address.setStreet("testowa");
-        address.setCity("Test");
-
-        newCompany.setAddress(address);
+        Company newCompany = getTestCompany();
 
         int id = companyDao.add(newCompany);
         assertEquals(1, companyDao.getAll().size());
 
         companyDao.delete(companyDao.getById(id));
         assertNull(companyDao.getById(id));
+        assertEquals(0, companyDao.getAll().size());
     }
 
     @Test
     public void shouldUpdateCompany(){
         assertEquals(0, companyDao.getAll().size());
-        Company newCompany = new Company();
-        newCompany.setName("Test");
-        newCompany.setNip("00000");
+        Company newCompany = getTestCompany();
 
         int id = companyDao.add(newCompany);
         assertEquals(1, companyDao.getAll().size());
+
         newCompany.setNip("11111");
         companyDao.update(newCompany);
 
