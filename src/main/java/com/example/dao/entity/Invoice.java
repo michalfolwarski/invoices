@@ -1,8 +1,17 @@
 package com.example.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode
+@ToString
+@Setter
+@Getter
 @Entity
 @Table(name = "invoices")
 public class Invoice {
@@ -29,65 +38,5 @@ public class Invoice {
     private List<InvoiceEntity> entities;
 
     public Invoice() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Counterparty getCounterparty() {
-        return counterparty;
-    }
-
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
-    }
-
-    public String getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public List<InvoiceEntity> getEntities() {
-        return entities;
-    }
-
-    public void setEntities(List<InvoiceEntity> entities) {
-        this.entities = entities;
-    }
-
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "id=" + id +
-                ", no='" + no + '\'' +
-                ", company=" + company +
-                ", counterparty=" + counterparty +
-                ", bankAccount='" + bankAccount + '\'' +
-                ", entities=" + entities +
-                '}';
     }
 }

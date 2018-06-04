@@ -1,8 +1,17 @@
 package com.example.dao.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode
+@ToString
+@Setter
+@Getter
 @Entity
 @Table(name = "companies")
 public class Company {
@@ -24,54 +33,11 @@ public class Company {
     public Company() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getNip() {
-        return nip;
-    }
-
-    public void setNip(String nip) {
-        this.nip = nip;
-    }
-
     public List<Counterparty> getCounterparties() {
         return Counterparties;
     }
 
     public void setCounterparties(List<Counterparty> counterparties) {
         Counterparties = counterparties;
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", nip='" + nip + '\'' +
-                ", Counterparties=" + Counterparties +
-                '}';
     }
 }
